@@ -2,9 +2,7 @@
 
 A header only library for opening links.
 
-Currently works only on Linux, with consideration of MacOS and Windows at a later time.
-
-Static linking with no compile flags required.
+Works on Linux, MacOS and Windows.
 
 ### Usage
 ```C
