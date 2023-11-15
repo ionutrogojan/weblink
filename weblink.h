@@ -38,6 +38,9 @@ static inline int open_link(const char *link) {
 #elif _WIN32 // WINDOWS
 	fmtRet = asprintf(&cmd, "explorer '%s'", link);
 #endif
+	if (fmtRet == -1) {
+		return fmtRet;
+	}
 	int ret = system(cmd);
 	free(cmd);
 	return ret;
