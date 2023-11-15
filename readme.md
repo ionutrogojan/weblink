@@ -10,20 +10,17 @@ Works on Linux, MacOS and Windows.
 #include "weblink.h"
 
 int main(void) {
-	char link[] = "https://example.com/";
+	char *link = "https://example.com/";
 	switch (open_link(link)) {
 		case 0:
 			printf("Success: Link \"%s\" opened\n", link);
 			break;
-		case 1:
-			printf("Error: Link \"%s\" invalid\n", link);
-			break;
 		default:
-			printf("Error: Unable to find a provider\n");
+			printf("Error: Link \"%s\" invalid\n", link);
 			break;
 	}
 	return 0;
 }
 
-// gcc main.c -o main.o
+// gcc main.c -o main
 ```
