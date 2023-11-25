@@ -1,12 +1,13 @@
 # Weblink
 
-A header only library for opening links.
+A header only library for opening links with C.
 
 Works on Linux, MacOS and Windows.
 
 ### Usage
 ```C
 // main.c
+#include <stdio.h>
 #include "weblink.h"
 
 int main(void) {

@@ -25,8 +25,15 @@
 #ifndef WEBLINK_H
 #define  WEBLINK_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef INCLUDED_STDIO_H
+#define INCLUDED_STDIO_H
+	#include <stdio.h>
+#endif // INCLUDED_STDIO_H
+
+#ifndef INCLUDED_STDLIB_H
+#define INCLUDED_STDLIB_H
+	#include <stdlib.h>
+#endif // INCLUDED_STDLIB_H
 
 static inline int open_link(const char *link) {
 	char* cmd;
