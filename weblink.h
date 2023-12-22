@@ -35,7 +35,7 @@
 	#include <stdlib.h>
 #endif // INCLUDED_STDLIB_H
 
-static inline int open_link(const char *link) {
+static inline int openLink(const char *link) {
 	char* cmd;
 	int fmtRet = 0;
 #ifdef __linux__ // LINUX

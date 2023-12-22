@@ -12,7 +12,7 @@ Works on Linux, MacOS and Windows.
 
 int main(void) {
 	char *link = "https://example.com/";
-	switch (open_link(link)) {
+	switch (openLink(link)) {
 		case 0:
 			printf("Success: Link \"%s\" opened\n", link);
 			break;
