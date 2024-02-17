@@ -35,22 +35,49 @@
 	#include <stdlib.h>
 #endif // INCLUDED_STDLIB_H
 
-static inline int openLink(const char *link) {
-	char* cmd;
-	int fmtRet = 0;
-#ifdef __linux__ // LINUX
-	fmtRet = asprintf(&cmd, "xdg-open '%s' > /dev/null 2>&1", link);
-#elif __APPLE__ // MACOS
-	fmtRet = asprintf(&cmd, "open '%s'", link);
-#elif _WIN32 // WINDOWS
-	fmtRet = asprintf(&cmd, "explorer '%s'", link);
+/*
+#ifndef BUFFER_SIZE
+	#define BUFFER_SIZE 2048
 #endif
-	if (fmtRet == -1) {
-		return fmtRet;
-	}
-	int ret = system(cmd);
+*/
+
+// TODO: create an ifndef buffer size and use that for the cmd to avoid constant memory allocation and deallocation
+
+static inline int openLink(const char *link) {
+	char* cmd = NULL;
+	//char cmd[BUFFER_SIZE];
+	int res = 0;
+#ifdef __linux__ // LINUX
+	res = asprintf(&cmd, "xdg-open '%s' > /dev/null 2>&1", link);
+#elif __APPLE__ // MACOS
+	res = asprintf(&cmd, "open '%s'", link);
+#elif _WIN32 // WINDOWS
+	res = asprintf(&cmd, "explorer '%s'", link);
+#endif
+	if (res == -1)
+		return res;
+	res = system(cmd);
 	free(cmd);
-	return ret;
+	return res;
+}
+
+static inline int openLinks(const char *links[], int count) {
+	char *cmd = NULL;
+	int res = 0;
+	for (int i = 0; i < count; i++) {
+#ifdef __linux__ // LINUX
+		res = asprintf(&cmd, "xdg-open '%s' > /dev/null 2>&1", links[i]);
+#elif __APPLE__ // MACOS
+		res = asprintf(&cmd, "open '%s'", links[i]);
+#elif _WIN32 // WINDOWS
+		res = asprintf(&cmd, "explorer '%s'", links[i]);
+#endif
+		if (res == -1)
+			return res;
+		res = system(cmd);
+		free(cmd);
+	}
+	return res;
 }
 
 #endif // WEBLINK_H

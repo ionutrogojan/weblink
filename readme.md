@@ -12,14 +12,8 @@ Works on Linux, MacOS and Windows.
 
 int main(void) {
 	char *link = "https://example.com/";
-	switch (openLink(link)) {
-		case 0:
-			printf("Success: Link \"%s\" opened\n", link);
-			break;
-		default:
-			printf("Error: Link \"%s\" invalid\n", link);
-			break;
-	}
+	int res = openLink(link);
+	printf("Weblink\n  Status: %d,\n  Url: %s\n", res, link);
 	return 0;
 }
 
