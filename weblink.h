@@ -35,47 +35,37 @@
 	#include <stdlib.h>
 #endif // INCLUDED_STDLIB_H
 
-/*
+
 #ifndef BUFFER_SIZE
+	// The complete length of the command to be executed
 	#define BUFFER_SIZE 2048
 #endif
-*/
 
-// TODO: create an ifndef buffer size and use that for the cmd to avoid constant memory allocation and deallocation
+#ifdef __linux__ // LINUX
+	#define PLACEHOLDER "xdg-open '%s' > /dev/null 2>&1"
+#elif __APPLE__ // MACOS
+	#define PLACEHOLDER "open '%s'"
+#elif _WIN32 // WINDOWS
+	#define PLACEHOLDER "explorer '%s'"
+#endif
 
 static inline int openLink(const char *link) {
-	char* cmd = NULL;
-	//char cmd[BUFFER_SIZE];
-	int res = 0;
-#ifdef __linux__ // LINUX
-	res = asprintf(&cmd, "xdg-open '%s' > /dev/null 2>&1", link);
-#elif __APPLE__ // MACOS
-	res = asprintf(&cmd, "open '%s'", link);
-#elif _WIN32 // WINDOWS
-	res = asprintf(&cmd, "explorer '%s'", link);
-#endif
-	if (res == -1)
-		return res;
+	char cmd[BUFFER_SIZE];
+	int res = snprintf(cmd, BUFFER_SIZE, PLACEHOLDER, link);
+	if (res < 0 || res > BUFFER_SIZE)
+		return -1;
 	res = system(cmd);
-	free(cmd);
 	return res;
 }
 
-static inline int openLinks(const char *links[], int count) {
-	char *cmd = NULL;
+static inline int openLinks(const char *links[], const int count) {
+	char cmd[BUFFER_SIZE];
 	int res = 0;
 	for (int i = 0; i < count; i++) {
-#ifdef __linux__ // LINUX
-		res = asprintf(&cmd, "xdg-open '%s' > /dev/null 2>&1", links[i]);
-#elif __APPLE__ // MACOS
-		res = asprintf(&cmd, "open '%s'", links[i]);
-#elif _WIN32 // WINDOWS
-		res = asprintf(&cmd, "explorer '%s'", links[i]);
-#endif
-		if (res == -1)
+		res = snprintf(cmd, BUFFER_SIZE, PLACEHOLDER, links[i]);
+		if (res < 0 || res > BUFFER_SIZE)
 			return res;
 		res = system(cmd);
-		free(cmd);
 	}
 	return res;
 }
