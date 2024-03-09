@@ -31,15 +31,17 @@ int main(void) {
 #include <stdio.h>
 #include "weblink.h"
 
-#define COUNT 3
-
 int main(void) {
-	const char *links[COUNT] = {
+/*
+All link arrays must be NULL terminated
+*/
+	const char *links[] = {
 		"https://www.example.com",
 		"https://www.youtube.com",
-		"https://www.twitter.com"
+		"https://www.twitter.com",
+        NULL
 	};
-	int res = openLinks(links, COUNT);
+	int res = openLinks(links);
 	printf("Weblink\n  Status: %d\n", res);
 }
 

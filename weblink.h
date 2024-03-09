@@ -58,10 +58,10 @@ static inline int openLink(const char *link) {
 	return res;
 }
 
-static inline int openLinks(const char *links[], const int count) {
+static inline int openLinks(const char *links[]) {
 	char cmd[BUFFER_SIZE];
 	int res = 0;
-	for (int i = 0; i < count; i++) {
+	for (int i = 0; links[i] != NULL; i++) {
 		res = snprintf(cmd, BUFFER_SIZE, PLACEHOLDER, links[i]);
 		if (res < 0 || res > BUFFER_SIZE)
 			return res;
