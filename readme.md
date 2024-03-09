@@ -32,9 +32,7 @@ int main(void) {
 #include "weblink.h"
 
 int main(void) {
-/*
-All link arrays must be NULL terminated
-*/
+    // All link arrays must be NULL terminated
 	const char *links[] = {
 		"https://www.example.com",
 		"https://www.youtube.com",
