@@ -62,10 +62,14 @@ static inline int openLinks(const char *links[]) {
 	char cmd[BUFFER_SIZE];
 	int res = 0;
 	for (int i = 0; links[i] != NULL; i++) {
+		// formatting
 		res = snprintf(cmd, BUFFER_SIZE, PLACEHOLDER, links[i]);
 		if (res < 0 || res > BUFFER_SIZE)
 			return res;
+		// command execution
 		res = system(cmd);
+		if (res != 0)
+			return res;
 	}
 	return res;
 }
